@@ -1,1 +1,0 @@
-when in trouble read Documents/scrapegraph-py for references and docs/scrapegraphai.md
