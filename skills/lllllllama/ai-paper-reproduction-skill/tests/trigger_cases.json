@@ -1,0 +1,310 @@
+{
+  "schema_version": "1.0",
+  "cases": [
+    {
+      "id": "main_end_to_end_en",
+      "type": "positive",
+      "prompt": "Use ai-research-reproduction to reproduce this AI repository end-to-end. Read the README first, prefer documented inference or evaluation, and write repro_outputs.",
+      "expected_any": ["ai-research-reproduction"],
+      "expected_top": "ai-research-reproduction",
+      "forbidden": ["repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "repo_scan_only_en",
+      "type": "positive",
+      "prompt": "Scan this repository, read the README and config files, extract documented commands, and recommend the smallest credible reproduction target. Do not run anything yet.",
+      "expected_any": ["repo-intake-and-plan"],
+      "expected_top": "repo-intake-and-plan",
+      "forbidden": ["ai-research-reproduction", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "env_setup_only_en",
+      "type": "positive",
+      "prompt": "Prepare a conda-first environment and asset plan for this AI repo, including checkpoint, dataset, and cache path assumptions before any run.",
+      "expected_any": ["env-and-assets-bootstrap"],
+      "expected_top": "env-and-assets-bootstrap",
+      "forbidden": ["repo-intake-and-plan", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "run_and_report_only_en",
+      "type": "positive",
+      "prompt": "Run the selected documented inference command, capture evidence, and write SUMMARY.md, COMMANDS.md, LOG.md, and status.json.",
+      "expected_any": ["minimal-run-and-audit"],
+      "expected_top": "minimal-run-and-audit",
+      "forbidden": ["repo-intake-and-plan", "env-and-assets-bootstrap", "paper-context-resolver", "analyze-project", "run-train", "safe-debug"]
+    },
+    {
+      "id": "run_train_startup_en",
+      "type": "positive",
+      "prompt": "Run the selected training command conservatively for startup verification, capture checkpoint and status evidence, and write train_outputs.",
+      "expected_any": ["run-train"],
+      "expected_top": "run-train",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "run_train_resume_en",
+      "type": "positive",
+      "prompt": "Resume the documented training command for this repository from checkpoint latest.pt, monitor training status, and write train_outputs.",
+      "expected_any": ["run-train"],
+      "expected_top": "run-train",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "explore_code_lora_en",
+      "type": "positive",
+      "prompt": "On an isolated branch, explore adding LoRA to this backbone with the smallest adaptation. It is okay to commit exploratory modifications directly to the experiment branch and write explore_outputs.",
+      "expected_any": ["explore-code"],
+      "expected_top": "explore-code",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "run-train", "paper-context-resolver", "analyze-project", "safe-debug", "ai-research-explore"]
+    },
+    {
+      "id": "explore_code_module_transplant_en",
+      "type": "positive",
+      "prompt": "Use an isolated worktree to transplant a module from another paper repo, keep the change as a candidate only, and record the exploratory changeset.",
+      "expected_any": ["explore-code"],
+      "expected_top": "explore-code",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "run-train", "paper-context-resolver", "analyze-project", "safe-debug", "ai-research-explore"]
+    },
+    {
+      "id": "explore_run_sweep_en",
+      "type": "positive",
+      "prompt": "Use idle GPU on an experiment branch to run a batch sweep with a small subset and short-cycle guess-and-check trials, then rank the top runs in explore_outputs.",
+      "expected_any": ["explore-run"],
+      "expected_top": "explore-run",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "run-train", "paper-context-resolver", "analyze-project", "safe-debug", "ai-research-explore"]
+    },
+    {
+      "id": "explore_run_transfer_trial_en",
+      "type": "positive",
+      "prompt": "Explore quick transfer-learning runs on an isolated branch with a small subset first, then rank candidate runs and recommend next trials.",
+      "expected_any": ["explore-run"],
+      "expected_top": "explore-run",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "run-train", "paper-context-resolver", "analyze-project", "safe-debug", "ai-research-explore"]
+    },
+    {
+      "id": "research_explore_end_to_end_en",
+      "type": "positive",
+      "prompt": "On top of current_research improved-branch@abc123, use an isolated branch to coordinate exploratory code and run changes together, try several adapter variants, do short-cycle checks, and rank candidates in explore_outputs.",
+      "expected_any": ["ai-research-explore"],
+      "expected_top": "ai-research-explore",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "run-train", "paper-context-resolver", "analyze-project", "safe-debug", "explore-code", "explore-run"]
+    },
+    {
+      "id": "paper_gap_only_en",
+      "type": "positive",
+      "prompt": "The README is missing the exact evaluation split. Use the linked paper only to resolve that reproduction-critical detail and record any conflict.",
+      "expected_any": ["paper-context-resolver"],
+      "expected_top": "paper-context-resolver",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "analyze_project_only_en",
+      "type": "positive",
+      "prompt": "Read and understand this deep learning repository. Inspect the model structure, training entrypoint, config relationships, and likely insertion points without modifying code or running heavy jobs.",
+      "expected_any": ["analyze-project"],
+      "expected_top": "analyze-project",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "safe-debug"]
+    },
+    {
+      "id": "safe_debug_traceback_en",
+      "type": "positive",
+      "prompt": "Traceback (most recent call last): RuntimeError: CUDA out of memory",
+      "expected_any": ["safe-debug"],
+      "expected_top": "safe-debug",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project"]
+    },
+    {
+      "id": "safe_debug_loss_nan_en",
+      "type": "positive",
+      "prompt": "Training does not converge and loss is nan after a few iterations. Diagnose the likely cause conservatively before patching anything.",
+      "expected_any": ["safe-debug"],
+      "expected_top": "safe-debug",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project"]
+    },
+    {
+      "id": "safe_debug_checkpoint_fail_en",
+      "type": "positive",
+      "prompt": "RuntimeError while loading the checkpoint: size mismatch for classifier.weight and unexpected key in state_dict.",
+      "expected_any": ["safe-debug"],
+      "expected_top": "safe-debug",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project"]
+    },
+    {
+      "id": "safe_debug_training_failure_without_debug_word",
+      "type": "positive",
+      "prompt": "The distributed training launch now fails with NCCL timeout and the command hangs after rank 0 initializes.",
+      "expected_any": ["safe-debug"],
+      "expected_top": "safe-debug",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project"]
+    },
+    {
+      "id": "paper_summary_negative",
+      "type": "negative",
+      "prompt": "Summarize this paper, explain the novelty, compare it with prior work, and give me a related work overview.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "generic_conda_negative",
+      "type": "negative",
+      "prompt": "Create a conda environment for my computer vision project and suggest some useful packages.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "generic_benchmark_design_negative",
+      "type": "negative",
+      "prompt": "Design a new benchmark suite and a training plan for a multimodal model from scratch.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "open_brainstorming_negative",
+      "type": "negative",
+      "prompt": "Brainstorm open-ended novel research directions across any task, challenge my assumptions, and propose new benchmarks from scratch without a frozen current_research anchor.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-explore", "explore-code", "explore-run", "ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_repo_scan_vs_main",
+      "type": "boundary",
+      "prompt": "Read this AI repo README and files and tell me the documented inference, eval, and train commands. Do not run anything yet.",
+      "expected_any": ["repo-intake-and-plan"],
+      "expected_top": "repo-intake-and-plan",
+      "forbidden": ["ai-research-reproduction", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_setup_vs_main",
+      "type": "boundary",
+      "prompt": "Before we execute anything, figure out the conda environment, checkpoint paths, and dataset locations for this README-documented repo.",
+      "expected_any": ["env-and-assets-bootstrap"],
+      "expected_top": "env-and-assets-bootstrap",
+      "forbidden": ["minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_run_vs_main",
+      "type": "boundary",
+      "prompt": "We already selected the documented command. Just run it conservatively and write the standardized outputs.",
+      "expected_any": ["minimal-run-and-audit"],
+      "expected_top": "minimal-run-and-audit",
+      "forbidden": ["repo-intake-and-plan", "env-and-assets-bootstrap", "paper-context-resolver", "analyze-project", "run-train", "safe-debug"]
+    },
+    {
+      "id": "boundary_train_vs_verify",
+      "type": "boundary",
+      "prompt": "The training command is already selected. Resume training from checkpoint model_last.pt, capture status evidence, and write train_outputs.",
+      "expected_any": ["run-train"],
+      "expected_top": "run-train",
+      "forbidden": ["minimal-run-and-audit", "env-and-assets-bootstrap", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_explore_code_vs_trusted",
+      "type": "boundary",
+      "prompt": "On an isolated branch, explore adapter insertion for this backbone and keep the output as a candidate only. Do not treat it as the trusted baseline.",
+      "expected_any": ["explore-code"],
+      "expected_top": "explore-code",
+      "forbidden": ["run-train", "minimal-run-and-audit", "safe-debug", "analyze-project", "ai-research-explore"]
+    },
+    {
+      "id": "boundary_explore_run_vs_trusted",
+      "type": "boundary",
+      "prompt": "Use idle GPU to explore a small-subset short-cycle sweep on an experiment branch and rank candidate runs; this is not the trusted baseline.",
+      "expected_any": ["explore-run"],
+      "expected_top": "explore-run",
+      "forbidden": ["run-train", "minimal-run-and-audit", "safe-debug", "analyze-project", "ai-research-explore"]
+    },
+    {
+      "id": "boundary_research_explore_vs_code",
+      "type": "boundary",
+      "prompt": "Use current_research improved-branch@abc123 on an isolated branch to explore a transplant module change only and summarize the code changes as a candidate only.",
+      "expected_any": ["explore-code"],
+      "expected_top": "explore-code",
+      "forbidden": ["ai-research-explore", "explore-run", "run-train", "minimal-run-and-audit", "safe-debug", "analyze-project"]
+    },
+    {
+      "id": "boundary_research_explore_vs_run",
+      "type": "boundary",
+      "prompt": "Use current_research checkpoint best.pt to explore a small-subset short-cycle sweep only and rank top runs as candidate-only exploratory runs.",
+      "expected_any": ["explore-run"],
+      "expected_top": "explore-run",
+      "forbidden": ["ai-research-explore", "explore-code", "run-train", "minimal-run-and-audit", "safe-debug", "analyze-project"]
+    },
+    {
+      "id": "boundary_paper_vs_summary",
+      "type": "boundary",
+      "prompt": "Do not summarize the paper. Only resolve which dataset split and evaluation protocol the reproduction should use because the README is ambiguous.",
+      "expected_any": ["paper-context-resolver"],
+      "expected_top": "paper-context-resolver",
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_analysis_vs_debug",
+      "type": "boundary",
+      "prompt": "Review the code structure of this model repo, inspect suspicious implementation patterns, and give conservative suggestions. There is no active traceback right now.",
+      "expected_any": ["analyze-project"],
+      "expected_top": "analyze-project",
+      "forbidden": ["safe-debug", "minimal-run-and-audit", "env-and-assets-bootstrap"]
+    },
+    {
+      "id": "boundary_debug_vs_analysis",
+      "type": "boundary",
+      "prompt": "Expected all tensors to be on the same device, but found at least two devices. Diagnose the failure and propose the smallest safe fix before editing code.",
+      "expected_any": ["safe-debug"],
+      "expected_top": "safe-debug",
+      "forbidden": ["analyze-project", "minimal-run-and-audit", "env-and-assets-bootstrap"]
+    },
+    {
+      "id": "boundary_analyze_current_project_phrase",
+      "type": "boundary",
+      "prompt": "分析当前项目 / analyze the current project: read and understand this repository, inspect model structure and training entrypoints, and do not modify code or run heavy jobs.",
+      "expected_any": ["analyze-project"],
+      "expected_top": "analyze-project",
+      "forbidden": ["ai-research-reproduction", "ai-research-explore", "explore-code", "explore-run", "safe-debug", "minimal-run-and-audit"]
+    },
+    {
+      "id": "boundary_trusted_repro_phrase",
+      "type": "boundary",
+      "prompt": "做可信复现 / trusted reproduction: reproduce this AI repository from the README end-to-end, prefer documented inference or evaluation, and write repro_outputs.",
+      "expected_any": ["ai-research-reproduction"],
+      "expected_top": "ai-research-reproduction",
+      "forbidden": ["ai-research-explore", "explore-code", "explore-run", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "boundary_current_research_explore_phrase",
+      "type": "boundary",
+      "prompt": "在 current_research 上探索: on top of current_research improved-branch@abc123, use an isolated branch to coordinate exploratory code and run changes together, try candidate variants, and rank candidates in explore_outputs.",
+      "expected_any": ["ai-research-explore"],
+      "expected_top": "ai-research-explore",
+      "forbidden": ["ai-research-reproduction", "analyze-project", "safe-debug", "explore-code", "explore-run"]
+    },
+    {
+      "id": "negative_non_repo_debugging",
+      "type": "negative",
+      "prompt": "Debug this generic Python training loop bug and refactor the code for readability.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "negative_dataset_download_only",
+      "type": "negative",
+      "prompt": "Download COCO 2017 and organize it for later experiments.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    },
+    {
+      "id": "negative_title_only_paper_lookup",
+      "type": "negative",
+      "prompt": "Find the paper for this repository title and explain what it is about.",
+      "expected_any": [],
+      "expected_top": null,
+      "forbidden": ["ai-research-reproduction", "repo-intake-and-plan", "env-and-assets-bootstrap", "minimal-run-and-audit", "paper-context-resolver", "analyze-project", "safe-debug"]
+    }
+  ]
+}
+
