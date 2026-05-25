@@ -1,0 +1,9 @@
+# 个人持仓数据（敏感信息）
+holdings.csv
+
+# 个人关注列表
+watchlist.csv
+
+# 其他可能包含隐私的文件
+*.personal.csv
+*.private.csv
