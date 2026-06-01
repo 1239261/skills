@@ -1200,13 +1200,40 @@ When detected, the skill will display prominent warnings:
 
 ### Recommended APIs
 
-| Data Type | Source |
-|-----------|--------|
-| **Prices** | 同花顺，东方财富，新浪财经 |
-| **Fundamentals** | 公司财报，Wind，Choice |
-| **Capital Flow** | 交易所，同花顺 iFinD |
-| **Technical** | 计算得出 |
-| **News** | 财经媒体，公告 |
+| Data Type | Source | Priority |
+|-----------|--------|----------|
+| **ETF Prices** | 腾讯财经 (qt.gtimg.cn) | ⭐⭐⭐ **首选** |
+| **Prices** | 同花顺，东方财富，新浪财经 | ⭐⭐ 备选 |
+| **Fundamentals** | 公司财报，Wind，Choice | ⭐⭐ |
+| **Capital Flow** | 交易所，同花顺 iFinD | ⭐⭐ |
+| **Technical** | 计算得出 | ⭐ |
+| **News** | 财经媒体，公告 | ⭐ |
+
+### ⭐ 数据源使用说明
+
+**ETF 实时价格获取**：
+```bash
+# 首选：腾讯财经接口 (最准确、实时)
+curl -s "https://qt.gtimg.cn/q=s_sh515220" | strings
+# 返回格式：v_s_sh515220="1~~515220~1.251~0.021~1.71~..."
+# 字段说明：代码~现价~涨跌额~涨跌幅~成交量~...
+
+# 深市 ETF 使用 sz 前缀
+curl -s "https://qt.gtimg.cn/q=s_sz159583" | strings
+```
+
+**数据源优先级**：
+1. ⭐⭐⭐ **腾讯财经 (qt.gtimg.cn)** - ETF 实时价格最准确，更新及时
+2. ⭐⭐ 新浪财经/东方财富 - 备选数据源
+3. ⭐ 天天基金网 - 基金净值 (T+1 延迟)
+
+**注意事项**：
+- ✅ 沪市 ETF 代码前缀：`s_shXXXXXX` (如 s_sh515220)
+- ✅ 深市 ETF 代码前缀：`s_szXXXXXX` (如 s_sz159583)
+- ✅ LOF 基金代码前缀：`szXXXXXX` (如 sz160644)
+- ⚠️ 不要依赖第三方平台的"盘中估算"作为最终买卖依据
+- ⚠️ 必须以交易所或腾讯财经提供的实时价格为准
+- ⚠️ QDII/LOF 基金净值可能 T+1 延迟，注意标注数据日期
 
 ## Output Files
 
