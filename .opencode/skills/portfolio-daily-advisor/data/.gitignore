@@ -1,0 +1,3 @@
+# 其他可能包含隐私的文件
+*.personal.csv
+*.private.csv
