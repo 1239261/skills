@@ -1,0 +1,47 @@
+{
+  "exception": {
+    "commonPackages": [
+      "com.cicc.overseas.web.advice",
+	  "com.cicc.overseas.web.advice",
+      "com.cicc.overseas.boot.common"
+    ],
+    "globalExceptionHandlers": [
+      "RestResponseAdvice",
+      "GlobalExceptionHandler",
+      "ExceptionManager"
+    ],
+    "businessExceptions": [
+	
+    ]
+  },
+  "validation": {
+    "commonPackages": [
+	"com.cicc.overseas.boot.common.bo",
+	"com.baomidou.mybatisplus.core.mapper"
+    ],
+    "baseBeans": [
+	"PageBO",
+	"Mapper"
+    ]
+  },
+  "transaction": {
+    "commonPackages": [
+		"com.baomidou.mybatisplus.extension.service",
+		"com.baomidou.mybatisplus.extension.service",
+		"com.baomidou.mybatisplus.extension.service.impl"
+    ],
+    "baseServices": [
+      "IService"
+    ]
+  },
+  "report": {
+    "defaultPath": null,
+    "namingPattern": "{target}-{date}-{time}",
+    "autoSave": false,
+    "retention": {
+      "enabled": true,
+      "days": 7,
+      "autoCleanup": true
+    }
+  }
+}
